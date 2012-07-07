@@ -1,0 +1,24 @@
+Options -Indexes +FollowSymLinks
+
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{HTTP_HOST} ^freelindenlottery.com [NC]
+RewriteRule ^(.*)$ http://www.freelindenlottery.com$1 [L,R=301]
+
+RewriteRule ^index.php$ / [R=301,L]
+
+php_flag zlib.output_compression on
+php_value session.cookie_domain "www.freelindenlottery.com"
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)favicon\.ico$ http://www.freelindenlottery.com/static3/favicon.ico [L]
+
+<FilesMatch "favicon\.ico">
+ExpiresActive On
+ExpiresDefault "access plus 5 years"
+
+Header set Cache-Control "public"
+RequestHeader unset Cookie
+Header unset Set-Cookie
+</FilesMatch>
