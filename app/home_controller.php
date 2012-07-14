@@ -248,7 +248,7 @@ while($row = mysql_fetch_array($query))
 
 if(isset($_POST["getPreviousWinners"]))
 {
-  $query = mysql_query("SELECT * FROM results ORDER BY id DESC LIMIT 10,10000") or die(mysql_error());
+  $query = mysql_query("SELECT * FROM results ORDER BY id DESC LIMIT 11,10000") or die(mysql_error());
   while($row = mysql_fetch_array($query))
   {
     $row["username"] = str_replace(".", " ", $row["username"]);
