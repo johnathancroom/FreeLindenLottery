@@ -19,8 +19,8 @@ if(isset($_POST["submitUsername"]))
     if(!mysql_num_rows($query))
     {
       /* Get UUID */
-      $html = explode(",", curl("http://kubwa.net/_slworld/name2key.php?name=".$submitUsername));
-      if($html[1] == "NOT_FOUND") /* UUID not found */
+      /*$html = explode(",", curl("http://kubwa.net/_slworld/name2key.php?name=".$submitUsername));
+      if($html[1] == "NOT_FOUND") // UUID not found
       {
         $uuid = "";
         mail("johnathancroom@gmail.com", "UUID not in kubwa.net database", "The UUID for ".str_replace(" ", ".", $submitUsername)." was not found in  the database. Manual insertion needed.", "From:noreply@freelindenlottery.com");
@@ -31,7 +31,9 @@ if(isset($_POST["submitUsername"]))
         $submitUsername = $html[2];
         $new = explode(" ", $submitUsername);
         if($new[1] == "Resident") $submitUsername = $new[0];
-      }
+      }*/
+
+      $uuid = "";
       
       if($_COOKIE["referral"] != "")
       {
@@ -41,7 +43,7 @@ if(isset($_POST["submitUsername"]))
         $referralUsername = $row["username"];
         mysql_query("UPDATE users SET referrals='".mysql_escape_string($newReferrals)."' WHERE id='".mysql_escape_string($referral)."'");
       }
-  
+
       mysql_query("INSERT INTO users (username, uuid, last_checkin, referee) VALUES ('".mysql_escape_string(str_replace(" ", ".", $submitUsername))."', '".$uuid."', ".time().", '".$referralUsername."')");
       mysql_query("INSERT INTO checkins (username, signup, unix) VALUES ('".mysql_escape_string(str_replace(" ", ".", $submitUsername))."', 1, ".time().")");
     }
