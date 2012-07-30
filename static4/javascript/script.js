@@ -55,6 +55,7 @@ $(document).ready(function() {
   }, 5000)
 });
 
+// Google Analytics
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-22645449-8']);
 _gaq.push(['_trackPageview']);

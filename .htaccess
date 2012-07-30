@@ -13,12 +13,3 @@ php_value session.cookie_domain "www.freelindenlottery.com"
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)favicon\.ico$ http://www.freelindenlottery.com/static3/favicon.ico [L]
-
-<FilesMatch "favicon\.ico">
-ExpiresActive On
-ExpiresDefault "access plus 5 years"
-
-Header set Cache-Control "public"
-RequestHeader unset Cookie
-Header unset Set-Cookie
-</FilesMatch>

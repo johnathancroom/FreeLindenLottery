@@ -1,0 +1,4 @@
+ExpiresActive On
+ExpiresDefault "access plus 1 year"
+
+AddType application/x-httpd-php .css
