@@ -295,6 +295,18 @@
       </ul>
     </nav>
   </div>
+
+  <section class="ad">
+    <script type="text/javascript"><!--
+      google_ad_client = "ca-pub-1041151719223160";
+      /* FLL */
+      google_ad_slot = "9491603185";
+      google_ad_width = 728;
+      google_ad_height = 90;
+      //-->
+    </script>
+    <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+  </section>
   
   <script type="text/javascript" src="static4/javascript/plugins.js"></script>
   <script type="text/javascript" src="static4/javascript/script.js"></script>
