@@ -23,6 +23,6 @@ function getProfileUrl($username, $full = false) {
   }
   else
   {
-    return "/static3/images/avatar.jpg";
+    return "/static4/images/avatar.jpg";
   }
 }
