@@ -9,31 +9,41 @@ if(isset($_POST["submitUsername"]))
   $submitUsername = str_replace(" ", ".", $_POST["submitUsername"]);
   
   /* Username doesn't exist */
-  if($submitUsername == "" || !curl("https://my.secondlife.com/".str_replace(" ", ".", $submitUsername)))
+  if($submitUsername == "" || !curl("https://my.secondlife.com/$submitUsername"))
   {
     $_flash["error"][] = "The username you entered is invalid";
   }
   else
   {
-    $query = mysql_query("SELECT * FROM users WHERE username='".mysql_escape_string(str_replace(" ", ".", $submitUsername))."'") or die(mysql_error());
+    $query = mysql_query("SELECT * FROM users WHERE username='".mysql_escape_string($submitUsername)."'") or die(mysql_error());
     if(!mysql_num_rows($query))
     {
-      /* Get UUID */
-      /*$html = explode(",", curl("http://kubwa.net/_slworld/name2key.php?name=".$submitUsername));
-      if($html[1] == "NOT_FOUND") // UUID not found
+      // Get UUID
+      $data = file_get_html("http://w-hat.com/name2key?terse=1&name=".str_replace(".", "%20", $submitUsername))->plaintext;
+
+      // In w-hat database
+      if($data != "00000000-0000-0000-0000-000000000000")
       {
-        $uuid = "";
-        mail("johnathancroom@gmail.com", "UUID not in kubwa.net database", "The UUID for ".str_replace(" ", ".", $submitUsername)." was not found in  the database. Manual insertion needed.", "From:noreply@freelindenlottery.com");
+        $uuid = $data;
       }
+      // Try SL search
       else
       {
-        $uuid = $html[1];
-        $submitUsername = $html[2];
-        $new = explode(" ", $submitUsername);
-        if($new[1] == "Resident") $submitUsername = $new[0];
-      }*/
+        $data = file_get_html("http://search.secondlife.com/client_search.php?q=$submitUsername&s=People")->find("a");
+        $element = $data[0];
 
-      $uuid = "";
+        // Check that the username is correctly returned
+        if(str_replace(" ", ".", strtolower(preg_replace("/(.+ \(|\))/", "", $element->innertext))) == strtolower($submitUsername))
+        {
+          $uuid = str_replace("http://world.secondlife.com/resident/", "", $element->href);
+        }
+        // UUID could not be found
+        else
+        {
+          $uuid = "";
+          mail("johnathancroom@gmail.com", "UUID not in w-hat database or SL search", "The UUID for $submitUsername could not be found. Manual insertion needed.", "From:noreply@freelindenlottery.com");
+        }
+      }
       
       if($_COOKIE["referral"] != "")
       {
